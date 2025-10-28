@@ -1,6 +1,5 @@
 import argparse
 import base64
-import re
 
 """
     PoC for building FileFix style PowerShell scripts
