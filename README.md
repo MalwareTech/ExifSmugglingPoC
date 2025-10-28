@@ -14,4 +14,4 @@ For full details see: [https://malwaretech.com/2025/10/exif-smuggling](https://m
 `python3 exif_smuggling.py --input-file image.jpg --output-file payload.jpg --payload hello_world.dll`
 
 ### Example Phishing page
-`/www/index.html`
+`www/index.html`
